@@ -1,6 +1,6 @@
 FROM alpine:3.18.4
 
-RUN apk add --no-cache openssh-server
+RUN apk add --no-cache openssh
 
 COPY content /
 RUN addgroup --gid 10001 czertainly && \
