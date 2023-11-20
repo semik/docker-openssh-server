@@ -1,0 +1,4 @@
+test that when deployed in public it really listen on 80/22
+make nginx unprivileged
+make ssh RO
+make nginx RO
