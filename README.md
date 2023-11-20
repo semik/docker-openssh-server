@@ -39,4 +39,4 @@ root         210  0.0  0.0   1672   992 pts/0    Ss   08:15   0:00 sh
 root         239  0.0  0.0   2464  1688 pts/0    R+   08:21   0:00 ps aux
 ```
 
-And I also need psoosiblity to provide image with my SSH Host Key to prevent warning on client side.
+And I also need posibility to provide image with my SSH Host Key to prevent warning on client side.
