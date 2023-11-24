@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "ssh-and-nginx.fullname" . }}-www
+  labels:
+    {{- include "ssh-and-nginx.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.wwwService.type }}
+  ports:
+    - port: {{ .Values.wwwService.port }}
+      targetPort: 8080
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "ssh-and-nginx.selectorLabels" . | nindent 4 }}

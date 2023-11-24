@@ -12,6 +12,7 @@ sshImage:
   tag: "0.2.13"
 
 sshService:
+  type: NodePort
   port: 22
 
 wwwImage:
@@ -22,6 +23,7 @@ wwwImage:
 # For creating bookworm they are using bookworm slim which is lacking ps
 
 wwwService:
+  type: ClusterIP
   port: 80
 
 imagePullSecrets: []
@@ -49,10 +51,6 @@ securityContext: {}
   # readOnlyRootFilesystem: true
   # runAsNonRoot: true
   # runAsUser: 1000
-
-service:
-  type: ClusterIP
-  port: 80
 
 ingress:
   enabled: false
