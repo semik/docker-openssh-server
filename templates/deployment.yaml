@@ -35,7 +35,7 @@ spec:
           imagePullPolicy: {{ .Values.sshImage.pullPolicy }}
           ports:
             - name: ssh
-              containerPort: {{ .Values.sshService.port }}
+              containerPort: 2022
               protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
@@ -46,7 +46,7 @@ spec:
           imagePullPolicy: {{ .Values.wwwImage.pullPolicy }}
           ports:
             - name: http
-              containerPort: {{ .Values.wwwService.port }}
+              containerPort: 8080
               protocol: TCP
           volumeMounts:
             - name: nginx-conf
