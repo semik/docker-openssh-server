@@ -30,7 +30,7 @@ spec:
       containers:
         - name: {{ .Chart.Name }}-sshd
           securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
+            {{- toYaml .Values.sshService.securityContext | nindent 12 }}
           image: "{{ .Values.sshImage.repository }}:{{ .Values.sshImage.tag }}"
           imagePullPolicy: {{ .Values.sshImage.pullPolicy }}
           ports:
