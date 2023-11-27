@@ -1,7 +1,27 @@
-# docker-openssh-server
-Simple Alpine based Docker image for OpenSSH server
+# Helm Chart for basic HTTP server
 
-## build image
+This repository is mainly my **Docker**|**Helm**|**Kubernetes** learning project.
+
+It implements simple HTTP server with SSH server for uploading content. HTTP server is using official nginx image. SSH server is using my own Docker image.
+
+## SSH key generation
+
+In case you what to use server on ReadOnly FileSystem you need to prepare SSH key:
+```
+ssh-keygen -q -N "" -t rsa -b 2048 -f local/rsa_key
+```
+that command will create new SSH RSA key and store it in file `local/rsa_key` corresponding public key will be stored in `local/rsa_key.pub`.
+
+To be able log-in into SSH server you have to provide `local/authorized_keys`.
+
+
+## OpenSSH Server docker image
+
+Simple Alpine based Docker image for OpenSSH server with added user.
+
+It runs under user *czertainy* `uid=10001`. And exposes port 2022. Image is prepared to run on RO filesystem.
+
+### build image
 
 ```
 docker build -t sshd .
@@ -17,7 +37,7 @@ docker run -p 2022:2022 \
   -e HOST_KEY="$HOST_KEY" sshd
 ```
 
-## why another sshd image?
+### why another sshd image?
 
 Well many of them are outdated and/or not updated often.
 
@@ -42,8 +62,8 @@ root         239  0.0  0.0   2464  1688 pts/0    R+   08:21   0:00 ps aux
 
 And I also need posibility to provide image with my SSH Host Key to prevent warning on client side.
 
-## errors
+### errors
 
-### `Attempt to write login records by non-root user (aborting)`
+#### `Attempt to write login records by non-root user (aborting)`
 
 When running under non-root, it produces above warning line in logs peer every user login. This is fine, it is produced by [`login_write()`](https://github.com/openssh/openssh-portable/blob/master/loginrec.c#L440) which tries to write into `/var/log/lastlog` and this is possible only as root.
