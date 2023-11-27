@@ -14,6 +14,9 @@ sshImage:
 sshService:
   type: NodePort
   port: 30022
+  rsa_private_file: "local/rsa_key"
+  rsa_public_file: "local/rsa_key.pub"
+  authorized_keys_file: "local/authorized_keys"
   securityContext:
     capabilities:
       drop:
