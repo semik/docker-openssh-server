@@ -46,10 +46,4 @@ And I also need posibility to provide image with my SSH Host Key to prevent warn
 
 ### `Attempt to write login records by non-root user (aborting)`
 
-When running under non-root, it produces line in logs:
-
-```
-Attempt to write login records by non-root user (aborting)
-```
-
-peer every login. This is fine, it is produced by [`login_write()`](https://github.com/openssh/openssh-portable/blob/master/loginrec.c#L440) which tries to write into `/var/log/lastlog` and this is possible only as root.
+When running under non-root, it produces above warning line in logs peer every user login. This is fine, it is produced by [`login_write()`](https://github.com/openssh/openssh-portable/blob/master/loginrec.c#L440) which tries to write into `/var/log/lastlog` and this is possible only as root.
