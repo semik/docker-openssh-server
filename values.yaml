@@ -9,7 +9,7 @@ sshImage:
   repository: semik75/sshd
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "0.2.13"
+  tag: "0.2.14"
 
 sshService:
   type: NodePort

@@ -33,12 +33,25 @@ spec:
             {{- toYaml .Values.sshService.securityContext | nindent 12 }}
           image: "{{ .Values.sshImage.repository }}:{{ .Values.sshImage.tag }}"
           imagePullPolicy: {{ .Values.sshImage.pullPolicy }}
+          env:
+            - name: SSHD_ARGS
+              value: "-d"
           ports:
             - name: ssh
               containerPort: 2022
               protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: sshd-conf
+              mountPath: /etc/ssh/ssh_host_rsa_key
+              subPath: rsa_private
+            - name: sshd-conf
+              mountPath: /etc/ssh/ssh_host_rsa_key.pub
+              subPath: rsa_public
+            - name: sshd-conf
+              mountPath: /home/czertainly/.ssh/authorized_keys
+              subPath: authorized_keys
         - name: {{ .Chart.Name }}-www
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
@@ -61,6 +74,16 @@ spec:
           items:
             - key: default.conf
               path: default.conf
+      - name: sshd-conf
+        configMap:
+          name: sshd-conf
+          items:
+            - key: rsa_private
+              path: rsa_private
+            - key: rsa_public
+              path: rsa_public
+            - key: authorized_keys
+              path: authorized_keys
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
