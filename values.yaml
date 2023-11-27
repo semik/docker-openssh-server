@@ -13,7 +13,14 @@ sshImage:
 
 sshService:
   type: NodePort
-  port: 22
+  port: 30022
+  securityContext:
+    capabilities:
+      drop:
+        - ALL
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    runAsUser: 10001
 
 wwwImage:
   repository: nginx
@@ -25,6 +32,13 @@ wwwImage:
 wwwService:
   type: ClusterIP
   port: 80
+  securityContext:
+    capabilities:
+      drop:
+        - ALL
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    runAsUser: 101
 
 imagePullSecrets: []
 nameOverride: ""
