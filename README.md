@@ -13,16 +13,17 @@ docker build -t sshd .
 export HOST_KEY=`cat example_ssh_host_rsa_key`
 docker run -p 2022:2022 \
   -e AUTHORIZED_KEYS='ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEEigT76j7Ku8S5dhFRRFLD9tPO4x8VzyIOazMREi7Bq' \
+  -e SSHD_ARGS="-d" \
   -e HOST_KEY="$HOST_KEY" sshd
 ```
 
 ## why another sshd image?
 
-Well many of them are outdated and/or not updated often. 
+Well many of them are outdated and/or not updated often.
 
-[linuxserver/openssh-server](https://hub.docker.com/r/linuxserver/openssh-server) looks like only one well managed. But it is not possible to run it without root:
+[linuxserver/openssh-server](https://hub.docker.com/r/linuxserver/openssh-server) looks like one well managed. But it is not possible to run it without root:
 ```
-root@71db271c45e5:/# ps aux 
+root@71db271c45e5:/# ps aux
 USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
 root           1  0.0  0.0    208    72 ?        Ss   08:15   0:00 /package/admin/s6/command/s6-svscan -d4 -- /run/service
 root          15  0.0  0.0    212    68 ?        S    08:15   0:00 s6-supervise s6-linux-init-shutdownd
@@ -40,3 +41,15 @@ root         239  0.0  0.0   2464  1688 pts/0    R+   08:21   0:00 ps aux
 ```
 
 And I also need posibility to provide image with my SSH Host Key to prevent warning on client side.
+
+## errors
+
+### `Attempt to write login records by non-root user (aborting)`
+
+When running under non-root, it produces line in logs:
+
+```
+Attempt to write login records by non-root user (aborting)
+```
+
+peer every login. This is fine, it is produced by [`login_write()`](https://github.com/openssh/openssh-portable/blob/master/loginrec.c#L440) which tries to write into `/var/log/lastlog` and this is possible only as root.

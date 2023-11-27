@@ -27,4 +27,4 @@ then
 fi
 
 echo "Executitng OpenSSH"
-/usr/sbin/sshd -p 2022 -D -e
+/usr/sbin/sshd -p 2022 -D -e $SSHD_ARGS
