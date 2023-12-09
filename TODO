@@ -1,1 +1,4 @@
 add shared persistent volume
+
+try expose 22 throught ingress
+https://stackoverflow.com/questions/66367867/how-to-expose-port-22-via-nginx-ingress-controller

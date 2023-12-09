@@ -12,14 +12,14 @@ ssh-keygen -q -N "" -t rsa -b 2048 -f local/rsa_key
 ```
 that command will create new SSH RSA key and store it in file `local/rsa_key` corresponding public key will be stored in `local/rsa_key.pub`.
 
-To be able log-in into SSH server you have to provide `local/authorized_keys`.
+To be able to log in into SSH server you have to provide `local/authorized_keys`.
 
 
 ## OpenSSH Server docker image
 
-Simple Alpine based Docker image for OpenSSH server with added user.
+Simple Alpine-based Docker image for OpenSSH server with added user.
 
-It runs under user *czertainy* `uid=10001`. And exposes port 2022. Image is prepared to run on RO filesystem.
+It runs under user *czertainy* `uid=10001`. And exposes port 2022. The image is prepared to run on a RO filesystem.
 
 ### build image
 
